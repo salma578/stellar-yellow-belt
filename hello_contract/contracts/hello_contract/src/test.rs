@@ -4,18 +4,24 @@ use super::*;
 use soroban_sdk::{vec, Env, String};
 
 #[test]
-fn test() {
+fn award_badge_issues_a_project_specific_yellow_belt_status() {
     let env = Env::default();
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
 
-    let words = client.hello(&String::from_str(&env, "Dev"));
+    let badge = client.award_badge(
+        &String::from_str(&env, "Alex"),
+        &String::from_str(&env, "Finished the Stellar Yellow Belt project"),
+    );
+
     assert_eq!(
-        words,
+        badge,
         vec![
             &env,
-            String::from_str(&env, "Hello"),
-            String::from_str(&env, "Dev"),
+            String::from_str(&env, "Stellar Yellow Belt"),
+            String::from_str(&env, "Alex"),
+            String::from_str(&env, "Finished the Stellar Yellow Belt project"),
+            String::from_str(&env, "verified"),
         ]
     );
 }
