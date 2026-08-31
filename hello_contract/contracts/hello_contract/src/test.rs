@@ -24,4 +24,7 @@ fn award_badge_issues_a_project_specific_yellow_belt_status() {
             String::from_str(&env, "verified"),
         ]
     );
+
+    let total = client.total_badges();
+    assert_eq!(total, 1);
 }

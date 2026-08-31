@@ -1,6 +1,6 @@
 # Stellar Yellow Belt Soroban Contract
 
-This contract is the project-specific smart contract for the Yellow Belt demo. Instead of the default hello-world template, it exposes an `award_badge` method that creates a verified badge payload for a recipient and project milestone.
+This project contains a project-specific Soroban smart contract for issuing a Yellow Belt completion badge on Stellar Testnet. Instead of the default hello-world template, it exposes an `award_badge` method that accepts a recipient and achievement text and returns a verified badge payload.
 
 ## Contract method
 
@@ -8,16 +8,18 @@ This contract is the project-specific smart contract for the Yellow Belt demo. I
 pub fn award_badge(env: Env, recipient: String, achievement: String) -> Vec<String>
 ```
 
-The function returns a vector shaped like:
+The method returns a vector with the format:
 
 ```text
 ["Stellar Yellow Belt", recipient, achievement, "verified"]
 ```
 
+It also tracks the total number of badges issued using the instance storage counter `badge_cnt`.
+
 ## Deployed contract
 
 ```text
-CB47RKMUX54G7UCXN5ROVTX3CMTBP4GNYHJFBHH37FPMJMPK7GL3DYTS
+CAHD6Y7CRSWAP7QEKOIORPAIBMBPQHL7F4ZGQKOUVS4MD2EZ7JPCMCPK
 ```
 
 ## Files
@@ -26,12 +28,14 @@ CB47RKMUX54G7UCXN5ROVTX3CMTBP4GNYHJFBHH37FPMJMPK7GL3DYTS
 - `contracts/hello_contract/src/test.rs` — contract regression tests
 - `Cargo.toml` — workspace setup for Soroban dependencies
 
-## Validation
-
-Run the workspace tests with:
+## Build and deploy
 
 ```bash
-cargo test --workspace
+cargo test --workspace -- --nocapture
+stellar contract build --manifest-path Cargo.toml --package hello_contract --out-dir .artifacts --profile release
+stellar contract deploy --source-account deployer --network testnet --wasm .artifacts/hello_contract.wasm --alias yellowbelt
 ```
 
-The contract is designed to support the frontend wallet flow used by the React app in the project root.
+## Notes
+
+The app in the project root calls this deployed contract through Freighter on Stellar Testnet. The Old contract ID has been replaced with the new active deployment ID above.

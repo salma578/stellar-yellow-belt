@@ -17,7 +17,7 @@ import {
 import "./App.css";
 
 const CONTRACT_ID =
-  "CB47RKMUX54G7UCXN5ROVTX3CMTBP4GNYHJFBHH37FPMJMPK7GL3DYTS";
+  "CAHD6Y7CRSWAP7QEKOIORPAIBMBPQHL7F4ZGQKOUVS4MD2EZ7JPCMCPK";
 const RPC_URL = "https://soroban-testnet.stellar.org";
 
 function App() {
